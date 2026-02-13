@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.Cinemachine;
+using UnityEngine;
 
 public class Cannon : MonoBehaviour
 {
@@ -6,7 +7,8 @@ public class Cannon : MonoBehaviour
     public float shootSpeed = 10f;
     public float rotateSpeed = 60f;
     public GameObject cannonHead;
-    
+    public CinemachineImpulseSource impluse;
+    public float implusePower;
     [Header("라인")]
     public Transform shootLineDir;
     public LineRenderer lineRenderer;
@@ -14,10 +16,16 @@ public class Cannon : MonoBehaviour
     public float basicLineSize = 0.3f;
 
     public Player player;
+
+    private void Awake()
+    {
+        impluse = GameObject.FindFirstObjectByType<CinemachineImpulseSource>();
+        lineRenderer.enabled = true;
+    }
+
     private void Start()
     {
-        lineRenderer.startWidth = basicLineSize;
-        lineRenderer.endWidth = basicLineSize;
+        
     }
 
     void Update()
@@ -25,11 +33,14 @@ public class Cannon : MonoBehaviour
         RotateCannonHead();
         DrawParabolicTrajectory();
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && GameManager.Instance.canShoot)
         {
-            lineRenderer.startWidth = 0;
-            lineRenderer.endWidth = 0;// 발사하면 라인 제거
-            player.Shoot(shootSpeed);
+            GameManager.Instance.canShoot = false;
+            impluse.DefaultVelocity = new Vector3(0,-2,0);  
+            impluse.ImpulseDefinition.ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Explosion;
+            impluse.GenerateImpulseWithForce(implusePower);
+            lineRenderer.enabled = false;
+            player.ShootPlayer(shootSpeed);
         }
     }
 
@@ -75,11 +86,8 @@ public class Cannon : MonoBehaviour
 
         euler.z = Mathf.Clamp(euler.z, -50f, 50f);
         cannonHead.transform.localEulerAngles = euler;
-
-        if (Input.GetKey(KeyCode.E))
-            cannonHead.transform.Rotate(Vector3.forward * rotateSpeed * Time.deltaTime);
-
-        if (Input.GetKey(KeyCode.Q))
-            cannonHead.transform.Rotate(Vector3.back * rotateSpeed * Time.deltaTime);
+        float wheel = Input.GetAxis("Mouse ScrollWheel");
+        cannonHead.transform.Rotate(Vector3.forward * rotateSpeed * wheel);
+       
     }
 }
