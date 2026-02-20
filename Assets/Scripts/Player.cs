@@ -6,11 +6,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
-
-
-
-
     #region 총 발사 코드(만약을 위한 보류)
     /*public GameObject weapon;
     public bool aiming = false;
@@ -198,14 +193,19 @@ public class Player : MonoBehaviour
 
         foreach (Collider col in cols)
         {
-            if (col.gameObject == gameObject) continue;
+            /*if (col.gameObject == this.gameObject)
+            {
+                Debug.Log("asdf");
+                continue;
+            }*/
             col.enabled = true;
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        rigid.isKinematic = true;
+        Debug.Log("test");  
+        //rigid.isKinematic = true;
         rigid.linearVelocity = Vector3.zero;
         this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
         if (!GameManager.Instance.isFail)

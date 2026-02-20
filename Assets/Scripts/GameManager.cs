@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
         cannonObj = GameObject.FindFirstObjectByType<Cannon>().gameObject;
         cannonTransform = cannonObj.transform;
         canShoot = true;
-
+        isFail = false;
     }
 
 
