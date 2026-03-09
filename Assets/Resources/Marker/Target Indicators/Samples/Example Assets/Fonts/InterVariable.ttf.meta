@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: 66391c30b6b845d498c5569434b2d15d
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Inter Variable
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324272
+  packageName: Target Indicators
+  packageVersion: 1.0.0
+  assetPath: Assets/Target Indicators/Samples/Example Assets/Fonts/InterVariable.ttf
+  uploadId: 780041

@@ -9,58 +9,88 @@ public class Cannon : MonoBehaviour
     public GameObject cannonHead;
     public CinemachineImpulseSource impluse;
     public float implusePower;
+
     [Header("라인")]
     public Transform shootLineDir;
     public LineRenderer lineRenderer;
     public float maxDistance = 15;
-    public float basicLineSize = 0.3f;
+    //public float basicLineSize = 0.3f;
 
     public Player player;
+
+    private float currentAngle = 0f; // 각도 캐싱 ⭐
 
     private void Awake()
     {
         impluse = GameObject.FindFirstObjectByType<CinemachineImpulseSource>();
         lineRenderer.enabled = true;
-    }
 
-    private void Start()
-    {
-        
+        // 초기 각도 저장
+        currentAngle = cannonHead.transform.localEulerAngles.z;
+        if (currentAngle > 180) currentAngle -= 360;
     }
 
     void Update()
     {
         RotateCannonHead();
         DrawParabolicTrajectory();
+        
+
+        
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && GameManager.Instance.canShoot)
         {
-            GameManager.Instance.canShoot = false;
-            impluse.DefaultVelocity = new Vector3(0,-2,0);  
-            impluse.ImpulseDefinition.ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Explosion;
-            impluse.GenerateImpulseWithForce(implusePower);
-            lineRenderer.enabled = false;
-            player.ShootPlayer(shootSpeed);
+            Shoot();
         }
+    }
+
+    void LateUpdate()
+    {
+        if (GameManager.Instance.status == GameStatus.idle)
+        {
+            player.transform.localRotation = Quaternion.Euler(72f, -90f, 0f);
+        }
+    }
+
+    void RotateCannonHead()
+    {
+        if (GameManager.Instance.status != GameStatus.idle)
+            return;
+
+        float wheel = Input.GetAxis("Mouse ScrollWheel");
+        if (Mathf.Abs(wheel) < 0.001f) return; // 입력 없으면 스킵 ⭐
+
+        // 각도 업데이트
+        currentAngle += rotateSpeed * wheel;
+        currentAngle = Mathf.Clamp(currentAngle, -50f, 50f);
+
+        // Quaternion으로 설정 (더 안정적) ⭐
+        cannonHead.transform.localRotation = Quaternion.Euler(0, 0, currentAngle);
+    }
+
+    void Shoot()
+    {
+        GameManager.Instance.canShoot = false;
+        impluse.DefaultVelocity = new Vector3(0, -2, 0);
+        impluse.ImpulseDefinition.ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Explosion;
+        impluse.GenerateImpulseWithForce(implusePower);
+        lineRenderer.enabled = false;
+        player.ShootPlayer(shootSpeed);
     }
 
     void DrawParabolicTrajectory()
     {
         Vector3 startPos = shootLineDir.position;
         Vector3 dir = player.transform.up.normalized;
-
         float gravity = Mathf.Abs(Physics.gravity.y);
         float timeStep = 0.05f;
         int maxSteps = 30;
 
         lineRenderer.positionCount = maxSteps;
 
-        Vector3 prevPos = startPos;
-
         for (int i = 0; i < maxSteps; i++)
         {
             float t = i * timeStep;
-
             Vector3 pos =
                 startPos +
                 dir * shootSpeed * t +
@@ -73,21 +103,6 @@ public class Cannon : MonoBehaviour
             }
 
             lineRenderer.SetPosition(i, pos);
-            prevPos = pos;
         }
-    }
-
-    void RotateCannonHead()
-    {
-        Vector3 euler = cannonHead.transform.localEulerAngles;
-
-        // 0~360 → -180~180 변환
-        if (euler.z > 180) euler.z -= 360;
-
-        euler.z = Mathf.Clamp(euler.z, -50f, 50f);
-        cannonHead.transform.localEulerAngles = euler;
-        float wheel = Input.GetAxis("Mouse ScrollWheel");
-        cannonHead.transform.Rotate(Vector3.forward * rotateSpeed * wheel);
-       
     }
 }
