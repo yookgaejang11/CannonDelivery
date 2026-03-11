@@ -5,6 +5,7 @@ using TargetIndicators;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public enum GameStatus
 {
@@ -15,9 +16,12 @@ public enum GameStatus
     fail
 }
 
+
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
+
+    public float playTime = 0f;
 
     public Transform cannonTransform;
 
@@ -92,6 +96,14 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if(status != GameStatus.goal)
+        {
+            playTime += Time.unscaledDeltaTime;
+        }
+    }
+
     public bool IsDeliveryClear()
     {
         for(int i = 0; i < isDelivery.Count; i++)
@@ -103,6 +115,21 @@ public class GameManager : MonoBehaviour
         }
         return true;
     }
+
+    public int DeliveryNum()
+    {
+        int num = 0;
+        for(int i = 0; i < isDelivery.Count;i++)
+        {
+            if (isDelivery[i])
+            {
+                num++;
+            }
+        }
+
+        return num;
+    }
+   
 
     public void ReStart()
     {
@@ -125,18 +152,19 @@ public class GameManager : MonoBehaviour
         canShoot = true;
         isFail = false;
         status = GameStatus.idle;
+        foreach(Slider ui in UiManager.Instance.progressUi)
+        {
+            ui.value = 0;
+        }
         
     }
 
     public void Clear()
     {
-        Debug.Log("Clear");
+        
+        UiManager.Instance.OpenResultScreen();
     }
 
-    public void Fail()
-    {
-        Debug.Log("Fail");
-    }
     public static GameManager Instance
     {
         get

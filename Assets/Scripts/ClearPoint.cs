@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using DG.Tweening;
 public class ClearPoint : MonoBehaviour
 {
     public Transform Pos;
@@ -20,13 +20,13 @@ public class ClearPoint : MonoBehaviour
         {
             if (collider.CompareTag("Player"))
             {
-                if (GameManager.Instance.IsDeliveryClear())
+                
+                if (GameManager.Instance.IsDeliveryClear() && GameManager.Instance.status != GameStatus.goal)
                 {
+
+                    GameManager.Instance.status = GameStatus.goal;
+                    UiManager.Instance.progressUi[2].DOValue(1, 0.25f);
                     GameManager.Instance.Clear();
-                }
-                else
-                {
-                    GameManager.Instance.Fail();
                 }
             }
 

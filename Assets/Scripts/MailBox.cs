@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -27,11 +28,11 @@ public class MailBox : MonoBehaviour
             {
                 Debug.Log("µé¾î¿È");
                 GameManager.Instance.isDelivery[num] = true;
-                
                 collider.gameObject.GetComponent<Rigidbody>().useGravity = false;
                 collider.gameObject.GetComponent<Rigidbody>().isKinematic = true;
                 collider.transform.position = boxPos.position;
                 collider.transform.parent = boxPos;
+                UiManager.Instance.progressUi[1].DOValue(GameManager.Instance.DeliveryNum(), 0.25f);
             }
 
         }

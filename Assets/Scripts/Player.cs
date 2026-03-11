@@ -1,8 +1,10 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using Unity.Cinemachine;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -137,7 +139,7 @@ public class Player : MonoBehaviour
 
     void StartAiming()
     {
-        cam.Lens.FieldOfView = 50;
+        //cam.Lens.FieldOfView = 50;
         Time.timeScale = slowValue;
         aimLine.enabled = true;
         aimingTime = 0f;
@@ -184,7 +186,7 @@ public class Player : MonoBehaviour
         canShoot = false;
 
 
-        cam.Lens.FieldOfView = Mathf.Lerp(50, 70f, Time.deltaTime * 100f);
+        //cam.Lens.FieldOfView = Mathf.Lerp(50, 70f, Time.deltaTime * 100f);
 
         Vector3 targetPoint = GetMouseWorldPosition();
 
@@ -260,7 +262,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (!collision.gameObject.CompareTag("Goal") && !collision.gameObject.CompareTag("Box"))
+        if (!GameManager.Instance.IsDeliveryClear() &&!collision.gameObject.CompareTag("Goal") && !collision.gameObject.CompareTag("Box") && GameManager.Instance.status != GameStatus.goal && GameManager.Instance.status != GameStatus.fail)
         {
 
             KnockBack();
@@ -301,14 +303,14 @@ public class Player : MonoBehaviour
     }
 
 
-    
+
 
     public void ShootPlayer(float speed)
     {
-        
+
         GameManager.Instance.status = GameStatus.shooting;
         transform.parent = null;
-        
+
         rigid.isKinematic = false;
         rigid.useGravity = true;
 
@@ -335,7 +337,9 @@ public class Player : MonoBehaviour
         Debug.Log(this.transform.rotation.z);
         rotY = transform.eulerAngles.y;
         rotZ = transform.eulerAngles.z;
+
+        UiManager.Instance.progressUi[0].DOValue(UiManager.Instance.progressUi[0].maxValue,0.25f);
     }
 
-    
+
 }
