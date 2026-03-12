@@ -19,7 +19,10 @@ public enum GameStatus
 
 public class GameManager : MonoBehaviour
 {
+
     private static GameManager instance;
+
+    public ClearPoint clearPoint;
 
     public float playTime = 0f;
 
@@ -44,6 +47,11 @@ public class GameManager : MonoBehaviour
 
     TargetIndicatorManager targetIndicatorManager;
     VisualIndicatorManager visualIndicatorManager;
+
+    public int playerStar;
+
+    public float star3Time;
+    public float star2Time;
 
     public List<bool> isDelivery = new List<bool>();
     private void Awake()
@@ -98,10 +106,23 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(status != GameStatus.goal)
+        if(status != GameStatus.goal )
         {
             playTime += Time.unscaledDeltaTime;
         }
+    }
+
+    public int CalculateStars()
+    {
+        float time = GameManager.Instance.playTime;
+
+        if (time <= star3Time)
+            return 3;
+
+        if (time <= star2Time)
+            return 2;
+
+        return 1;
     }
 
     public bool IsDeliveryClear()
@@ -156,6 +177,8 @@ public class GameManager : MonoBehaviour
         {
             ui.value = 0;
         }
+
+        player.curBullet = player.maxBullet;
         
     }
 

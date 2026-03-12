@@ -8,6 +8,7 @@ TagManager:
   - ragdoll
   - Goal
   - Box
+  - LandingGround
   layers:
   - Default
   - TransparentFX

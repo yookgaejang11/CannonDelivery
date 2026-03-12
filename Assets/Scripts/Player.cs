@@ -30,8 +30,9 @@ public class Player : MonoBehaviour
     
     public int curBullet;
     public int maxBullet = 1;
-    
-   
+
+    bool isCheckingLanding;
+
     Rigidbody rigid;
     Rigidbody[] rbs;
 
@@ -47,6 +48,7 @@ public class Player : MonoBehaviour
     public float extraFallForce = 20f;   // 스페이스 누를 때 추가 낙하 힘
     public float rotationSpeed = 10f;    // 회전 보간 속도
     public float maxFallSpeed = -25f;   // 최대 낙하 속도 제한
+ 
 
     private void Start()
     {
@@ -55,6 +57,7 @@ public class Player : MonoBehaviour
 
     void FirstSetting()
     {
+        curBullet = maxBullet;
         rigid = GetComponent<Rigidbody>();
         lineRenderer = GetComponent<LineRenderer>();
         mainCam = Camera.main;
@@ -115,7 +118,7 @@ public class Player : MonoBehaviour
             canShoot = true;
         }
 
-        if(GameManager.Instance.status == GameStatus.aiming || GameManager.Instance.status == GameStatus.shooting)
+        if(GameManager.Instance.status == GameStatus.aiming || GameManager.Instance.status == GameStatus.shooting && curBullet > 0)
         {
             if (Input.GetMouseButtonDown(1) && canShoot)
             {
@@ -132,6 +135,7 @@ public class Player : MonoBehaviour
             {
                 GameManager.Instance.status = GameStatus.shooting;
                 Shoot();
+                curBullet -= 1;
                 StopAiming();
             }
         }
@@ -262,12 +266,34 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if ( !collision.gameObject.CompareTag("Goal") && !collision.gameObject.CompareTag("Box") && GameManager.Instance.status != GameStatus.goal && GameManager.Instance.status != GameStatus.fail)
-        {
+        if (GameManager.Instance.status == GameStatus.goal ||
+            GameManager.Instance.status == GameStatus.fail)
+            return;
 
-            KnockBack();
+        if (isCheckingLanding)
+            return;
+
+        if (collision.gameObject.CompareTag("LandingGround") && GameManager.Instance.IsDeliveryClear())
+        {
+            StartCoroutine(CheckLanding());
+            return;
         }
 
+        KnockBack();
+    }
+
+    IEnumerator CheckLanding()
+    {
+        isCheckingLanding = true;
+
+        yield return new WaitForSeconds(0.5f);
+
+        if (GameManager.Instance.clearPoint.IsPlayerInside() && GameManager.Instance.IsDeliveryClear())
+        {
+            GameManager.Instance.clearPoint.ClearStage();
+        }
+
+        isCheckingLanding = false;
     }
 
     public void KnockBack()

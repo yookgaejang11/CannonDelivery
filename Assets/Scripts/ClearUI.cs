@@ -1,3 +1,4 @@
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -5,21 +6,84 @@ using UnityEngine.SceneManagement;
 public class ClearUI : MonoBehaviour
 {
     public TextMeshProUGUI playTimeTxt;
+    public TextMeshProUGUI deliveryTxt;
     public TextMeshProUGUI taskTxt;
-    public TextMeshProUGUI Deathcount;
+    public TextMeshProUGUI deathCountTxt;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public int stars;
+    public GameObject starObj;
+    public GameObject starParent;
+
+    public void ShowClearUI()
     {
-        
+        StartCoroutine(ClearSequence());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator ClearSequence()
     {
-        playTimeTxt.text ="��۽ð� : "+ UiManager.Instance.FormatTime(GameManager.Instance.playTime);
-        taskTxt.text = "�ù� ����ϱ� (" + GameManager.Instance.DeliveryNum() + "/" + GameManager.Instance.isDelivery.Count + ")";
-        Deathcount.text = "��� Ƚ�� : "+GameManager.Instance.failCount.ToString();
+        stars = GameManager.Instance.CalculateStars();
+        yield return new WaitForSeconds(1.6f);
+        // 1 택배 배송 결과
+        deliveryTxt.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(0.3f);
+
+        // 2 목표 도달
+        taskTxt.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(0.3f);
+
+        // 3 시간 카운트
+        float targetTime = GameManager.Instance.playTime;
+        float curTime = 0;
+        playTimeTxt.gameObject.SetActive(true);
+        while (curTime < targetTime)
+        {
+            curTime += Time.deltaTime * 20f;
+
+            playTimeTxt.text = "배송시간 : "
+                + UiManager.Instance.FormatTime(curTime);
+
+            yield return null;
+        }
+        
+        playTimeTxt.text = "배송시간 : "
+            + UiManager.Instance.FormatTime(targetTime);
+
+        yield return new WaitForSeconds(0.1f);
+
+        deathCountTxt.gameObject.SetActive(true);
+        // 4 사고 횟수 카운트
+        int targetDeath = GameManager.Instance.failCount;
+
+        for (int i = 0; i <= targetDeath; i++)
+        {
+            deathCountTxt.text = "사고 횟수 : " + i;
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        yield return new WaitForSeconds(0.2f);
+
+        
+
+        for (int i = 0; i < stars; i++)
+        {
+            GameObject obj = Instantiate(starObj, starParent.transform);
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
+    int CalculateStars()
+    {
+        int stars = 1;
+
+        if (GameManager.Instance.failCount == 0)
+            stars++;
+
+        if (GameManager.Instance.playTime < 10f)
+            stars++;
+
+        return stars;
     }
 
     public void Retry()

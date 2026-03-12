@@ -13,6 +13,8 @@ public class UiManager : MonoBehaviour
     public TextMeshProUGUI arrivedTxt;
     public TextMeshProUGUI deathCountTxt;
 
+    public GameObject controlUI;
+
     public GameObject clearObj;
 
     public RectTransform TaskUI;   // 아래로 내려갈 UI
@@ -56,6 +58,15 @@ public class UiManager : MonoBehaviour
         // Update is called once per frame
         void Update()
     {
+        if(GameManager.Instance.status == GameStatus.idle)
+        {
+            controlUI.SetActive(true);
+        }
+        else
+        {
+            controlUI.SetActive(false) ;
+        }
+
         if (GameManager.Instance.IsDeliveryClear())
         {
             deliveryTxt.color = new Color32(8,255,0,255);
@@ -122,6 +133,8 @@ public class UiManager : MonoBehaviour
             ResultUI.DOAnchorPosY(1.5f, 0.5f)
                    .SetEase(Ease.OutBack)
         );
+
+        ResultUI.transform.parent.GetComponent<ClearUI>().ShowClearUI();
     }
 
     public static UiManager Instance
