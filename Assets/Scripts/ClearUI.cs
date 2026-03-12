@@ -17,7 +17,7 @@ public class ClearUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playTimeTxt.text = UiManager.Instance.FormatTime(GameManager.Instance.playTime);
+        playTimeTxt.text ="배송시간 : "+ UiManager.Instance.FormatTime(GameManager.Instance.playTime);
         taskTxt.text = "택배 배송하기 (" + GameManager.Instance.DeliveryNum() + "/" + GameManager.Instance.isDelivery.Count + ")";
         Deathcount.text = "사고 횟수 : "+GameManager.Instance.failCount.ToString();
     }

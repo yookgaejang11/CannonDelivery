@@ -262,7 +262,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (!GameManager.Instance.IsDeliveryClear() &&!collision.gameObject.CompareTag("Goal") && !collision.gameObject.CompareTag("Box") && GameManager.Instance.status != GameStatus.goal && GameManager.Instance.status != GameStatus.fail)
+        if ( !collision.gameObject.CompareTag("Goal") && !collision.gameObject.CompareTag("Box") && GameManager.Instance.status != GameStatus.goal && GameManager.Instance.status != GameStatus.fail)
         {
 
             KnockBack();
