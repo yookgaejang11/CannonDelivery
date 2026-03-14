@@ -9,6 +9,8 @@ TagManager:
   - Goal
   - Box
   - LandingGround
+  - bgmSlider
+  - sfxSlider
   layers:
   - Default
   - TransparentFX

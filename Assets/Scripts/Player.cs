@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
     public int curBullet;
     public int maxBullet = 1;
 
+    public ParticleSystem shootParticle;
+
     bool isCheckingLanding;
 
     Rigidbody rigid;
@@ -189,6 +191,10 @@ public class Player : MonoBehaviour
     {
         canShoot = false;
 
+        
+        shootParticle.Play();
+
+        SoundManager.Instance.PlaySFX(SFXType.shootBox);
 
         //cam.Lens.FieldOfView = Mathf.Lerp(50, 70f, Time.deltaTime * 100f);
 
@@ -298,6 +304,17 @@ public class Player : MonoBehaviour
 
     public void KnockBack()
     {
+        int ran = UnityEngine.Random.Range(1,100);
+        Debug.Log(ran);
+        if (ran <= 80)
+        {
+            SoundManager.Instance.PlaySFX(SFXType.bonk);
+        }
+        else
+        {
+            
+            SoundManager.Instance.PlaySFX(SFXType.fail);
+        }
         this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
         if (!GameManager.Instance.isFail)
         {

@@ -29,6 +29,8 @@ public class UiManager : MonoBehaviour
     public TextMeshProUGUI timeText;
     public List<Slider> progressUi = new List<Slider>();
 
+
+
     private void Awake()
     {
         if(instance == null)

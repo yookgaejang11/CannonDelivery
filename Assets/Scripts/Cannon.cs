@@ -38,9 +38,11 @@ public class Cannon : MonoBehaviour
 
         
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && GameManager.Instance.canShoot)
+        if (Input.GetKeyDown(KeyCode.F) && GameManager.Instance.canShoot)
         {
+            SoundManager.Instance.PlaySFX(SFXType.cannon_shot);
             Shoot();
+
         }
     }
 
