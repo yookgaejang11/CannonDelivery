@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
 
     public float extraFallForce = 20f;   // 스페이스 누를 때 추가 낙하 힘
     public float rotationSpeed = 10f;    // 회전 보간 속도
-    public float maxFallSpeed = -25f;   // 최대 낙하 속도 제한
+    public float maxFallSpeed = -30f;   // 최대 낙하 속도 제한
  
 
     private void Start()
@@ -292,7 +292,7 @@ public class Player : MonoBehaviour
     {
         isCheckingLanding = true;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
 
         if (GameManager.Instance.clearPoint.IsPlayerInside() && GameManager.Instance.IsDeliveryClear())
         {

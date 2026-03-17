@@ -112,6 +112,8 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    
+
     private void TryFindSliders()
     {
         // 활성/비활성 오브젝트 포함해서 전부 탐색
@@ -155,4 +157,8 @@ public enum SFXType
     cannon_shot,
     boxDrop,
     shootBox,
+    beep,
+    ringing,
+    Clear,
+
 }

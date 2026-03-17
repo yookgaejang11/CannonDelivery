@@ -30,7 +30,8 @@ public class UiManager : MonoBehaviour
     public List<Slider> progressUi = new List<Slider>();
 
 
-
+    public GameObject pauseUi;
+    public bool isPause=false;
     private void Awake()
     {
         if(instance == null)
@@ -108,6 +109,38 @@ public class UiManager : MonoBehaviour
             }
         }
 
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(isPause)
+            {
+                isPause = false;
+                Time.timeScale = 1.0f;
+                pauseUi.SetActive(false);
+            }
+            else
+            {
+                isPause = true;
+                Time.timeScale = 0;
+                pauseUi.SetActive(true);
+            }
+        }
+       
+
+    }
+
+    public void PhoneTouch()
+    {
+        SoundManager.Instance.PlaySFX(SFXType.beep);
+    }
+
+
+
+    public void Resume()
+    {
+        isPause = false;
+        Time.timeScale = 1;
+        pauseUi.SetActive(false);
     }
 
     public string FormatTime(float time)
@@ -135,7 +168,7 @@ public class UiManager : MonoBehaviour
             ResultUI.DOAnchorPosY(1.5f, 0.5f)
                    .SetEase(Ease.OutBack)
         );
-
+        
         ResultUI.transform.parent.GetComponent<ClearUI>().ShowClearUI();
     }
 

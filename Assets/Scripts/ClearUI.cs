@@ -20,12 +20,14 @@ public class ClearUI : MonoBehaviour
     }
 
     IEnumerator ClearSequence()
-    {
+    {   
         stars = GameManager.Instance.CalculateStars();
-        yield return new WaitForSeconds(1.6f);
+        yield return new WaitForSeconds(0.8f);
+        SoundManager.Instance.PlaySFX(SFXType.Clear);
+        yield return new WaitForSeconds(0.8f);
         // 1 택배 배송 결과
         deliveryTxt.gameObject.SetActive(true);
-
+        deliveryTxt.text = "택배 배송하기 (" + GameManager.Instance.DeliveryNum() + "/" + GameManager.Instance.isDelivery.Count + ")";
         yield return new WaitForSeconds(0.3f);
 
         // 2 목표 도달
@@ -43,7 +45,7 @@ public class ClearUI : MonoBehaviour
 
             playTimeTxt.text = "배송시간 : "
                 + UiManager.Instance.FormatTime(curTime);
-
+            
             yield return null;
         }
         
@@ -59,6 +61,7 @@ public class ClearUI : MonoBehaviour
         for (int i = 0; i <= targetDeath; i++)
         {
             deathCountTxt.text = "사고 횟수 : " + i;
+            
             yield return new WaitForSeconds(0.05f);
         }
 

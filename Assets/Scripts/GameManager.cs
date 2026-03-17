@@ -43,7 +43,6 @@ public class GameManager : MonoBehaviour
     public bool canShoot = true;
 
     public List<Transform> targets = new List<Transform>();
-    public Transform goal;
 
     TargetIndicatorManager targetIndicatorManager;
     VisualIndicatorManager visualIndicatorManager;
@@ -93,20 +92,13 @@ public class GameManager : MonoBehaviour
         //goal = GameObject.FindGameObjectWithTag("Goal").transform;
 
         Debug.Log(targets.Count);
-        if (goal != null)
-        {
-            targetIndicatorManager.TryAddTarget(goal, out var targetIndicator);
-        }
-        else
-        {
-            Debug.LogError("does not exsisted GoalPoint");
-        }
+       
 
     }
 
     private void Update()
     {
-        if(status != GameStatus.goal )
+        if(status != GameStatus.goal && !UiManager.Instance.isPause )
         {
             playTime += Time.unscaledDeltaTime;
         }
@@ -125,6 +117,7 @@ public class GameManager : MonoBehaviour
         return 1;
     }
 
+  
     public bool IsDeliveryClear()
     {
         for(int i = 0; i < isDelivery.Count; i++)
@@ -184,7 +177,7 @@ public class GameManager : MonoBehaviour
 
     public void Clear()
     {
-        
+        //SoundManager.Instance.bgmSource.Stop();
         UiManager.Instance.OpenResultScreen();
     }
 
