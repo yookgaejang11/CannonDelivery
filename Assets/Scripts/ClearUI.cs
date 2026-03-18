@@ -76,18 +76,7 @@ public class ClearUI : MonoBehaviour
         }
     }
 
-    int CalculateStars()
-    {
-        int stars = 1;
-
-        if (GameManager.Instance.failCount == 0)
-            stars++;
-
-        if (GameManager.Instance.playTime < 10f)
-            stars++;
-
-        return stars;
-    }
+   
 
     public void Retry()
     {

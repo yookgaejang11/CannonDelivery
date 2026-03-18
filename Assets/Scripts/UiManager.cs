@@ -3,7 +3,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using JetBrains.Annotations;
 
 public class UiManager : MonoBehaviour
 {
@@ -21,8 +20,8 @@ public class UiManager : MonoBehaviour
     public CanvasGroup ClearBg;     // Fade될 UI
     public RectTransform ResultUI;   // 올라올 UI
 
-    public float downY = -200f;     // A가 내려갈 위치
-    public float targetCY = 100f;   // C가 올라올 목표 위치
+    public float downY = -200f;     // task가 내려갈 위치
+    public float targetCY = 100f;   // ClearUI가 올라올 목표 위치
 
     public bool taskActive = true;
 
@@ -44,90 +43,72 @@ public class UiManager : MonoBehaviour
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         progressUi[1].maxValue = GameManager.Instance.isDelivery.Count;
-        ClearBg.DOFade(0f, 0);
+        ClearBg.DOFade(0f, 0); //배경 페이드 0
         clearObj.SetActive(false);
         
     }
-
-    
-
-    
-
-
-        // Update is called once per frame
-        void Update()
+    void Update()
+    { 
+    if(GameManager.Instance.status == GameStatus.idle)
     {
-        if(GameManager.Instance.status == GameStatus.idle)
+        controlUI.SetActive(true);
+    }
+    else
+    {
+        controlUI.SetActive(false) ;
+    }
+
+    if (GameManager.Instance.IsDeliveryClear())
+    {
+        deliveryTxt.color = new Color32(8,255,0,255);
+    }
+    else
+    {
+        deliveryTxt.color = Color.white;
+    }
+    deathCountTxt.text = "X" + GameManager.Instance.failCount;
+    deliveryTxt.text = "택배 배송하기 (" + GameManager.Instance.DeliveryNum() + "/" + GameManager.Instance.isDelivery.Count + ")";
+
+    timeText.text = FormatTime(GameManager.Instance.playTime);
+
+
+    if(Input.GetKeyDown(KeyCode.Tab))
+    {
+        if (taskActive)
         {
-            controlUI.SetActive(true);
+            taskActive = false;
+            TaskUI.DOAnchorPosY(-300f, 0.5f);
+
         }
         else
         {
-            controlUI.SetActive(false) ;
+            taskActive = true;
+            TaskUI.DOAnchorPosY(272, 0.5f);
         }
+    }
 
-        if (GameManager.Instance.IsDeliveryClear())
+
+    if(Input.GetKeyDown(KeyCode.Escape))
+    {
+        if(isPause)
         {
-            deliveryTxt.color = new Color32(8,255,0,255);
+            isPause = false;
+            Time.timeScale = 1.0f;
+            pauseUi.SetActive(false);
         }
         else
         {
-            deliveryTxt.color = Color.white;
+            isPause = true;
+            Time.timeScale = 0;
+            pauseUi.SetActive(true);
         }
-        deathCountTxt.text = "X" + GameManager.Instance.failCount;
-        deliveryTxt.text = "택배 배송하기 (" + GameManager.Instance.DeliveryNum() + "/" + GameManager.Instance.isDelivery.Count + ")";
-
-        timeText.text = FormatTime(GameManager.Instance.playTime);
-
-
-        if(Input.GetKeyDown(KeyCode.Tab))
-        {
-            if (taskActive)
-            {
-                taskActive = false;
-                Sequence seq = DOTween.Sequence();
-
-                seq.Append(
-                    TaskUI.DOAnchorPosY(-300f, 0.5f)
-                           .SetEase(Ease.InQuad)
-                );
-            }
-            else
-            {
-
-                taskActive = true;
-                Sequence seq = DOTween.Sequence();
-
-                seq.Append(
-                    TaskUI.DOAnchorPosY(272, 0.5f)
-                           .SetEase(Ease.InQuad)
-                );
-            }
-        }
-
-
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            if(isPause)
-            {
-                isPause = false;
-                Time.timeScale = 1.0f;
-                pauseUi.SetActive(false);
-            }
-            else
-            {
-                isPause = true;
-                Time.timeScale = 0;
-                pauseUi.SetActive(true);
-            }
-        }
+    }
        
 
-    }
+}
 
     public void PhoneTouch()
     {

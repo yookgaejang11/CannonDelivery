@@ -10,47 +10,49 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    [Header("플레이어")]
+    public float implusePower;
+    public float KnockbackPow = 5f;
+
+    bool isCheckingLanding;
+
+    public float extraFallForce = 20f;   // 스페이스 누를 때 추가 낙하 힘
+    public float rotationSpeed = 10f;    // 회전 보간 속도
+    public float maxFallSpeed = -30f;   // 최대 낙하 속도 제한
+
     public float rotZ;
     public float rotY;
+
+    [Header("무기")]
     public GameObject weapon;
+    public ParticleSystem shootParticle;
     public bool aiming = false;
+    public GameObject shootStartPos;
     public float aimingTime;
+    public LineRenderer aimLine;
+    public float aimLineLength = 10f;
     public float slowValue;
     public float maxAimingTime = 0.3f;
     LineRenderer lineRenderer;
     public float coolTime;
     public float maxCoolTime = 0.15f;
     public bool canShoot = true;
+
+    [Header("택배")]
     public GameObject projectilePrefab;
     public float projectileSpeed = 20f;
-    public LineRenderer aimLine;
-    public float aimLineLength = 10f;
-    public GameObject shootStartPos;
-    private Camera mainCam;
-    
     public int curBullet;
     public int maxBullet = 1;
 
-    public ParticleSystem shootParticle;
-
-    bool isCheckingLanding;
-
     Rigidbody rigid;
     Rigidbody[] rbs;
-
     public Rigidbody hipsRb;
     Collider[] cols;
     Animator anim;
     public CinemachineImpulseSource impluse;
     public CinemachineCamera cam;
+    private Camera mainCam;
 
-    public float implusePower;
-    public float KnockbackPow = 5f;
-
-    public float extraFallForce = 20f;   // 스페이스 누를 때 추가 낙하 힘
-    public float rotationSpeed = 10f;    // 회전 보간 속도
-    public float maxFallSpeed = -30f;   // 최대 낙하 속도 제한
- 
 
     private void Start()
     {
@@ -97,20 +99,14 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        
-
         Bazooka();
-
     }
 
-    /// <summary>
-    /// 바주카 코드
-    /// </summary>
     void Bazooka()
     {
         aimingTime += Time.deltaTime;
         coolTime += Time.deltaTime;
-        if (aimingTime > maxAimingTime)
+        if (aimingTime > maxAimingTime && GameManager.Instance.status == GameStatus.aiming && !UiManager.Instance.isPause)
         {
             Time.timeScale = 1;
         }
@@ -208,6 +204,7 @@ public class Player : MonoBehaviour
             Quaternion.identity
         );
 
+        //오브젝트 충돌 무시
         Physics.IgnoreCollision(
             projectile.GetComponent<Collider>(),
             GetComponent<Collider>()
@@ -234,6 +231,7 @@ public class Player : MonoBehaviour
         // 스페이스 누르면 추가 낙하 가속
         if (Input.GetKey(KeyCode.Space) &&( GameManager.Instance.status == GameStatus.shooting || GameManager.Instance.status == GameStatus.aiming))
         {
+            //velocityY 값이 - 일때 몸 기울이기
             if (rigid.linearVelocity.y < 0)
             {
                 float targetX = 90f + rigid.linearVelocity.y;

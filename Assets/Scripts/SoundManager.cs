@@ -11,8 +11,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource bgmSource;
     public AudioSource sfxSource;
 
-    public AudioClip bgm1;
-    public AudioClip bgm2;
+    public AudioClip bgmClip;
 
     [Header("UI Sliders (자동 연결 가능)")]
     public Slider bgmSlider;
@@ -52,7 +51,7 @@ public class SoundManager : MonoBehaviour
         sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
 
         ApplyVolume();
-        bgmSource.clip = bgm1;
+        bgmSource.clip = bgmClip;
         bgmSource.loop = true;
         bgmSource.Play();
     }
@@ -96,7 +95,8 @@ public class SoundManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         TryFindSliders();
-        if (SceneManager.GetActiveScene().buildIndex == 0)
+        #region 예전 코드의 페해
+        /*if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             bgmSource.Stop();
             bgmSource.clip = bgm1;
@@ -109,10 +109,11 @@ public class SoundManager : MonoBehaviour
             bgmSource.clip = bgm2;
             bgmSource.loop = true;
             bgmSource.Play();
-        }
+        }*/
+        #endregion
     }
 
-    
+
 
     private void TryFindSliders()
     {
