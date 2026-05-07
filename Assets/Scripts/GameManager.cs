@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
     public float star3Time;
     public float star2Time;
 
+    public bool checkTime;
+
     public List<bool> isDelivery = new List<bool>();
     private void Awake()
     {
@@ -89,7 +91,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //goal = GameObject.FindGameObjectWithTag("Goal").transform;
 
         Debug.Log(targets.Count);
        
@@ -98,7 +99,12 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(status != GameStatus.goal && !UiManager.Instance.isPause )
+        if(Input.anyKeyDown)
+        {
+            checkTime = true;
+        }
+
+        if(status != GameStatus.goal && !UiManager.Instance.isPause && checkTime )
         {
             playTime += Time.unscaledDeltaTime;
         }
@@ -149,6 +155,7 @@ public class GameManager : MonoBehaviour
     {
         Destroy(player.gameObject);
         Destroy(cannonObj);
+        GameManager.instance.checkTime = false;
         GameObject obj = Instantiate(CannonPrefab, cannonTransform.position,cannonTransform.rotation);
         GameObject[] boxes = GameObject.FindGameObjectsWithTag("Box");
         foreach (GameObject box in boxes)

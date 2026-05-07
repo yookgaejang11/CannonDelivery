@@ -95,22 +95,6 @@ public class SoundManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         TryFindSliders();
-        #region 예전 코드의 페해
-        /*if (SceneManager.GetActiveScene().buildIndex == 0)
-        {
-            bgmSource.Stop();
-            bgmSource.clip = bgm1;
-            bgmSource.loop = true;
-            bgmSource.Play();
-        }
-        else if (SceneManager.GetActiveScene().buildIndex == 1)
-        {
-            bgmSource.Stop();
-            bgmSource.clip = bgm2;
-            bgmSource.loop = true;
-            bgmSource.Play();
-        }*/
-        #endregion
     }
 
 
@@ -158,8 +142,11 @@ public enum SFXType
     cannon_shot,
     boxDrop,
     shootBox,
-    beep,
     ringing,
     Clear,
-
+    phoneTouch,
+    phoneHold,
+    phoneDrop,
+    anglePlus,
+    angleMinus,
 }

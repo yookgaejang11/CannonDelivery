@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     public float implusePower;
     public float KnockbackPow = 5f;
 
-    bool isCheckingLanding;
+    public bool isCheckingLanding;
 
     public float extraFallForce = 20f;   // 스페이스 누를 때 추가 낙하 힘
     public float rotationSpeed = 10f;    // 회전 보간 속도
@@ -91,6 +91,7 @@ public class Player : MonoBehaviour
             if (col.gameObject.name == "Player")
                 continue;
             col.enabled = false;
+            col.isTrigger = true;
         }
 
 
@@ -244,6 +245,10 @@ public class Player : MonoBehaviour
             {
                 rigid.AddForce(Vector3.down * extraFallForce, ForceMode.Acceleration);
             }
+            else
+            {
+                rigid.AddForce(Vector3.down * 10, ForceMode.Acceleration);
+            }
         }
     }
 
@@ -265,46 +270,28 @@ public class Player : MonoBehaviour
                 continue;
             }*/
             col.enabled = true;
+            col.isTrigger = false;
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (GameManager.Instance.status == GameStatus.goal ||
-            GameManager.Instance.status == GameStatus.fail)
-            return;
 
+        Debug.Log("asdf");
         if (isCheckingLanding)
             return;
-
-        if (collision.gameObject.CompareTag("LandingGround") && GameManager.Instance.IsDeliveryClear())
-        {
-            StartCoroutine(CheckLanding());
+        if (GameManager.Instance.isFail)
             return;
-        }
-
+        
         KnockBack();
     }
 
-    IEnumerator CheckLanding()
-    {
-        isCheckingLanding = true;
-
-        yield return new WaitForSeconds(0.3f);
-
-        if (GameManager.Instance.clearPoint.IsPlayerInside() && GameManager.Instance.IsDeliveryClear())
-        {
-            GameManager.Instance.clearPoint.ClearStage();
-        }
-
-        isCheckingLanding = false;
-    }
 
     public void KnockBack()
     {
         int ran = UnityEngine.Random.Range(1,100);
-        Debug.Log(ran);
-        if (ran <= 80)
+        //Debug.Log(ran);
+        if (ran <= 90)
         {
             SoundManager.Instance.PlaySFX(SFXType.bonk);
         }
@@ -368,6 +355,7 @@ public class Player : MonoBehaviour
 
         foreach (Collider col in cols)
         {
+            col.isTrigger = true;
             if (col.gameObject.CompareTag("ragdoll"))
                 col.enabled = true;
 

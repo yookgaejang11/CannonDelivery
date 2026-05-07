@@ -79,12 +79,14 @@ public class UiManager : MonoBehaviour
     {
         if (taskActive)
         {
+            SoundManager.Instance.PlaySFX(SFXType.phoneDrop);
             taskActive = false;
             TaskUI.DOAnchorPosY(-300f, 0.5f);
 
         }
         else
         {
+                SoundManager.Instance.PlaySFX(SFXType.phoneHold);
             taskActive = true;
             TaskUI.DOAnchorPosY(272, 0.5f);
         }
@@ -112,7 +114,7 @@ public class UiManager : MonoBehaviour
 
     public void PhoneTouch()
     {
-        SoundManager.Instance.PlaySFX(SFXType.beep);
+        SoundManager.Instance.PlaySFX(SFXType.phoneTouch);
     }
 
 

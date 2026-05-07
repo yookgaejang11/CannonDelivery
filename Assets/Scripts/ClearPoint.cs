@@ -1,25 +1,11 @@
 using UnityEngine;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class ClearPoint : MonoBehaviour
 {
-    public Transform Pos;
-    public Vector3 BoxSize;
+    float time;
 
-    public bool IsPlayerInside()
-    {
-        Collider[] colliders = Physics.OverlapBox(Pos.position, BoxSize);
-
-        foreach (Collider collider in colliders)
-        {
-            if (collider.CompareTag("Player"))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     public void ClearStage()
     {
@@ -34,8 +20,33 @@ public class ClearPoint : MonoBehaviour
         }
     }
 
-    void OnDrawGizmos()
+    private void OnTriggerEnter(Collider other)
     {
-        Gizmos.DrawWireCube(Pos.position, BoxSize * 2);
+        if(other.gameObject.CompareTag("Player") && GameManager.Instance.IsDeliveryClear())
+        {
+            other.GetComponent<Player>().isCheckingLanding = true;
+        }
     }
+
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            time  += Time.deltaTime;
+            if (time > 0.5f && GameManager.Instance.IsDeliveryClear())
+            {
+                ClearStage();
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.GetComponent<Player>().isCheckingLanding = false;
+        }
+    }
+
 }

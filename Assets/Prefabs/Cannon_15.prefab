@@ -1084,7 +1084,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!144 &864036891935338506
 CharacterJoint:
   m_ObjectHideFlags: 0
@@ -2993,14 +2993,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5280272984431052963}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.094857484, y: 0, z: -0, w: 0.9954909}
-  m_LocalPosition: {x: -0, y: 0.0005560131, z: -6.519258e-10}
+  m_LocalRotation: {x: -0.65566355, y: 0.019853141, z: -0.0113386605, w: 0.754707}
+  m_LocalPosition: {x: 0.00001, y: 0.00064, z: -0.00002}
   m_LocalScale: {x: 1, y: 0.9999999, z: 0.9999998}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 102414549789792961}
   m_Father: {fileID: 1131341789506303402}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -81.579, y: 17.827, z: -17.135}
 --- !u!135 &5830596790608586125
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3796,7 +3796,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7021674162517168403}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4161771, y: -0.57166135, z: 0.4161771, w: 0.57166135}
+  m_LocalRotation: {x: 0.4156269, y: -0.5720614, z: 0.4156269, w: 0.5720614}
   m_LocalPosition: {x: 6.8, y: 2.8, z: 0.5999756}
   m_LocalScale: {x: 30, y: 30, z: 30}
   m_ConstrainProportionsScale: 0
@@ -3806,7 +3806,7 @@ Transform:
   - {fileID: 8896914826398543912}
   - {fileID: 7498989610074026349}
   m_Father: {fileID: 7532397739779692089}
-  m_LocalEulerAnglesHint: {x: 72.11, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 72, y: -90, z: 0}
 --- !u!114 &7568523961091776266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3819,32 +3819,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c0a07841be8334ea6b9cb47163b844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  implusePower: 5
+  KnockbackPow: 10
+  isCheckingLanding: 0
+  extraFallForce: 4
+  rotationSpeed: 1
+  maxFallSpeed: -25
   rotZ: 0
   rotY: 0
   weapon: {fileID: 8562690803465427196}
+  shootParticle: {fileID: 7114877566304639159}
   aiming: 0
+  shootStartPos: {fileID: 1385223220041659518}
   aimingTime: 0
+  aimLine: {fileID: 5710666497232830198}
+  aimLineLength: 10
   slowValue: 0.2
-  maxAimingTime: 0.3
+  maxAimingTime: 0.4
   coolTime: 0
   maxCoolTime: 0.15
   canShoot: 1
   projectilePrefab: {fileID: 6773915570499476573, guid: d50501472a46c4c4195878aaf725b052, type: 3}
   projectileSpeed: 20
-  aimLine: {fileID: 5710666497232830198}
-  aimLineLength: 10
-  shootStartPos: {fileID: 1385223220041659518}
   curBullet: 0
   maxBullet: 1
-  shootParticle: {fileID: 7114877566304639159}
   hipsRb: {fileID: 6101539546360047667}
   impluse: {fileID: 0}
   cam: {fileID: 0}
-  implusePower: 5
-  KnockbackPow: 3
-  extraFallForce: 30
-  rotationSpeed: 1
-  maxFallSpeed: -25
 --- !u!54 &4423481777119910817
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3871,7 +3872,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!95 &8422153379969330809
 Animator:
   serializedVersion: 7
@@ -3950,7 +3951,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.28671265
+        value: 0.20337677
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -3994,7 +3995,7 @@ LineRenderer:
     numCapVertices: 0
     alignment: 0
     textureMode: 1
-    textureScale: {x: 0.5, y: 1}
+    textureScale: {x: 0.5, y: 0.5}
     shadowBias: 0.5
     generateLightingData: 0
   m_MaskInteraction: 0
@@ -4486,7 +4487,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7826997873857357013}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.06975647, w: 0.9975641}
+  m_LocalRotation: {x: 0, y: 0, z: -0.17980665, w: 0.983702}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4498,7 +4499,7 @@ Transform:
   - {fileID: 3074310824083470687}
   - {fileID: 7359085248152086929}
   m_Father: {fileID: 1889486480320792072}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -8}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -20.717}
 --- !u!1 &7891515476425504345
 GameObject:
   m_ObjectHideFlags: 0
@@ -5508,16 +5509,28 @@ PrefabInstance:
       value: Smoke 1
       objectReference: {fileID: 0}
     - target: {fileID: 7187393024123294134, guid: 5f2bc166e68df974bb952c4ec5c43454, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7187393024123294134, guid: 5f2bc166e68df974bb952c4ec5c43454, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7187393024123294134, guid: 5f2bc166e68df974bb952c4ec5c43454, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7187393024123294134, guid: 5f2bc166e68df974bb952c4ec5c43454, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.123
+      value: 0.141
       objectReference: {fileID: 0}
     - target: {fileID: 7187393024123294134, guid: 5f2bc166e68df974bb952c4ec5c43454, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.612
+      value: 1.667
       objectReference: {fileID: 0}
     - target: {fileID: 7187393024123294134, guid: 5f2bc166e68df974bb952c4ec5c43454, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.095
+      value: -0.087
       objectReference: {fileID: 0}
     - target: {fileID: 7187393024123294134, guid: 5f2bc166e68df974bb952c4ec5c43454, type: 3}
       propertyPath: m_LocalRotation.w

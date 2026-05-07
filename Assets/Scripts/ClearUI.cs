@@ -52,7 +52,7 @@ public class ClearUI : MonoBehaviour
         playTimeTxt.text = "배송시간 : "
             + UiManager.Instance.FormatTime(targetTime);
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.01f);
 
         deathCountTxt.gameObject.SetActive(true);
         // 4 사고 횟수 카운트

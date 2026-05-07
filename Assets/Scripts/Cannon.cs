@@ -66,6 +66,15 @@ public class Cannon : MonoBehaviour
         currentAngle += rotateSpeed * wheel;
         currentAngle = Mathf.Clamp(currentAngle, -50f, 50f);
 
+        if(wheel > 0)
+        {
+            SoundManager.Instance.PlaySFX(SFXType.anglePlus);
+        }
+        else if(wheel < 0)
+        {
+            SoundManager.Instance.PlaySFX(SFXType.angleMinus);
+        }
+
         // Quaternion으로 설정 (더 안정적) ⭐
         cannonHead.transform.localRotation = Quaternion.Euler(0, 0, currentAngle);
     }
