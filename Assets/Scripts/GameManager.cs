@@ -1,10 +1,6 @@
-using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using TargetIndicators;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public enum GameStatus
@@ -22,39 +18,28 @@ public class GameManager : MonoBehaviour
 
     private static GameManager instance;
 
-    public ClearPoint clearPoint;
+    
+    [Header("게임 상태")]
+    public GameStatus status;
+    public bool isFail = false;
 
-    public float playTime = 0f;
-
-    public Transform cannonTransform;
-
-    public int failCount = 0;
-
+    [Header("플레이어")]
     public GameObject playerObj;
     public Player player;
 
+    [Header("대포")]
+    public Transform cannonTransform;
     public GameObject CannonPrefab;
-
     public GameObject cannonObj;
+    public bool canShoot = true;//플레이어 발사 후 false 처리
 
-    public GameStatus status;
-
-    public bool isFail = false;
-    public bool canShoot = true;
-
+    [Header("택배 마커")]
     public List<Transform> targets = new List<Transform>();
-
     TargetIndicatorManager targetIndicatorManager;
     VisualIndicatorManager visualIndicatorManager;
 
-    public int playerStar;
 
-    public float star3Time;
-    public float star2Time;
 
-    public bool checkTime;
-
-    public List<bool> isDelivery = new List<bool>();
     private void Awake()
     {
         if(instance == null)
@@ -97,75 +82,28 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        if(Input.anyKeyDown)
-        {
-            checkTime = true;
-        }
-
-        if(status != GameStatus.goal && !UiManager.Instance.isPause && checkTime )
-        {
-            playTime += Time.unscaledDeltaTime;
-        }
-    }
-
-    public int CalculateStars()
-    {
-        float time = GameManager.Instance.playTime;
-
-        if (time <= star3Time)
-            return 3;
-
-        if (time <= star2Time)
-            return 2;
-
-        return 1;
-    }
+   
 
   
-    public bool IsDeliveryClear()
-    {
-        for(int i = 0; i < isDelivery.Count; i++)
-        {
-            if (!isDelivery[i])
-            {
-                return false;
-            }
-        }
-        return true;
-    }
 
-    public int DeliveryNum()
-    {
-        int num = 0;
-        for(int i = 0; i < isDelivery.Count;i++)
-        {
-            if (isDelivery[i])
-            {
-                num++;
-            }
-        }
-
-        return num;
-    }
-   
 
     public void ReStart()
     {
+        
         Destroy(player.gameObject);
         Destroy(cannonObj);
-        GameManager.instance.checkTime = false;
+        StageManager.Instance.checkTime = false;
         GameObject obj = Instantiate(CannonPrefab, cannonTransform.position,cannonTransform.rotation);
         GameObject[] boxes = GameObject.FindGameObjectsWithTag("Box");
         foreach (GameObject box in boxes)
         {
             Destroy(box);
         }
-        for(int i = 0; i < isDelivery.Count; i++)
+        for(int i = 0; i < DeliveryManager.Instance.isDelivery.Count; i++)
         {
-            isDelivery[i] = false;
+            DeliveryManager.Instance.isDelivery[i] = false;
         }
+        
         player = GameObject.FindFirstObjectByType<Player>();
         playerObj = player.gameObject;
         cannonObj = GameObject.FindFirstObjectByType<Cannon>().gameObject;

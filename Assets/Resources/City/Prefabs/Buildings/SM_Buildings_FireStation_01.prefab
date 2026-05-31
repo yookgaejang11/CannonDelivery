@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 4769573456490199918}
   - component: {fileID: 581068296775406315}
   - component: {fileID: 5661579945473969089}
-  - component: {fileID: 5160387332420612002}
+  - component: {fileID: 5686269665400541446}
   m_Layer: 0
   m_Name: SM_Buildings_FireStation_01
-  m_TagString: Untagged
+  m_TagString: FailObj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61,6 +61,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
@@ -87,14 +90,14 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5160387332420612002
-MeshCollider:
+--- !u!65 &5686269665400541446
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 34763988822451364}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 7793bdd0c6c4bf845b569a8c36ac3b7e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -105,10 +108,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 522940561071662075, guid: 03b37c5cf06d7a04fa348545c8147ee4, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 10.5, y: 10.904337, z: 10.5}
+  m_Center: {x: 0.04351902, y: 5.43781, z: -0.019331932}
 --- !u!1 &6722803968083269500
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +170,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
@@ -273,6 +278,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:

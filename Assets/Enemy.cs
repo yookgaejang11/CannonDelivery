@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
-
+    public GameObject enemy;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

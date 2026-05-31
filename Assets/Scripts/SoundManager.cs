@@ -11,7 +11,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource bgmSource;
     public AudioSource sfxSource;
 
-    public AudioClip bgmClip;
+    public List<AudioClip> bgmClips = new List<AudioClip>();
 
     [Header("UI Sliders (자동 연결 가능)")]
     public Slider bgmSlider;
@@ -51,7 +51,7 @@ public class SoundManager : MonoBehaviour
         sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
 
         ApplyVolume();
-        bgmSource.clip = bgmClip;
+        bgmSource.clip = bgmClips[SceneManager.GetActiveScene().buildIndex];
         bgmSource.loop = true;
         bgmSource.Play();
     }

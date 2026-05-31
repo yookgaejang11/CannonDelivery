@@ -1,12 +1,8 @@
 using DG.Tweening;
-using System;
 using System.Collections;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using Unity.Cinemachine;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Player : MonoBehaviour
 {
@@ -53,7 +49,11 @@ public class Player : MonoBehaviour
     public CinemachineCamera cam;
     private Camera mainCam;
 
+    CinemachinePositionComposer composer;
 
+    public Vector2 screenPos;
+
+    public Transform trackingTarget;
     private void Start()
     {
         FirstSetting();
@@ -61,23 +61,26 @@ public class Player : MonoBehaviour
 
     void FirstSetting()
     {
+        Time.timeScale = 1;
         curBullet = maxBullet;
         rigid = GetComponent<Rigidbody>();
+        rigid.isKinematic = true;
+        rigid.useGravity = false;
         lineRenderer = GetComponent<LineRenderer>();
         mainCam = Camera.main;
         rbs = GetComponentsInChildren<Rigidbody>();
         cols = GetComponentsInChildren<Collider>();
         anim = GetComponent<Animator>();
         cam = GameObject.FindFirstObjectByType<CinemachineCamera>();
+        composer = GameObject.FindFirstObjectByType<CinemachinePositionComposer>();
         impluse = cam.gameObject.GetComponent<CinemachineImpulseSource>();
-        
-        cam.Target.TrackingTarget = this.gameObject.transform;
-
-        Debug.Log(GameManager.Instance.status);
-
+        cam.transform.rotation = Quaternion.Euler(18, 0, 0);
+        cam.Target.TrackingTarget = trackingTarget;
+        cam.Lens.FieldOfView = 70;
         GameManager.Instance.status = GameStatus.idle;
 
-
+        composer.Composition.ScreenPosition = screenPos;
+        composer.Lookahead.Enabled = true;
         foreach (Rigidbody rb in rbs)
         {
             if (rb.gameObject.name == "Player")
@@ -100,6 +103,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+
         Bazooka();
     }
 
@@ -276,21 +280,22 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-
-        Debug.Log("asdf");
         if (isCheckingLanding)
             return;
         if (GameManager.Instance.isFail)
             return;
         
-        KnockBack();
+        if(GameManager.Instance.status != GameStatus.fail && GameManager.Instance.status != GameStatus.goal && collision.gameObject.CompareTag("FailObj"))
+        {
+            StartCoroutine(Fail());
+        }
+
     }
 
 
     public void KnockBack()
     {
         int ran = UnityEngine.Random.Range(1,100);
-        //Debug.Log(ran);
         if (ran <= 90)
         {
             SoundManager.Instance.PlaySFX(SFXType.bonk);
@@ -304,9 +309,9 @@ public class Player : MonoBehaviour
         if (!GameManager.Instance.isFail)
         {
             GameManager.Instance.isFail = true;
-            impluse.ImpulseDefinition.ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Bump;
-            impluse.DefaultVelocity = new Vector3(-2, 0, 0);
-            impluse.GenerateImpulseWithForce(KnockbackPow * rigid.linearVelocity.magnitude);
+            impluse.ImpulseDefinition.ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Explosion;
+            impluse.DefaultVelocity = new Vector3(0, -2, 0);
+            impluse.GenerateImpulseWithForce(KnockbackPow);
         }
         foreach (Rigidbody rb in rbs)
         {
@@ -316,22 +321,33 @@ public class Player : MonoBehaviour
 
         EnableRagdoll();
         hipsRb.AddExplosionForce(KnockbackPow, transform.position, 3f);
-        StartCoroutine(Fail());
     }
 
     IEnumerator Fail()
     {
+        composer.Lookahead.Enabled = false;
         GameManager.Instance.status = GameStatus.fail;
-        GameManager.Instance.failCount++;
-        cam.Target.TrackingTarget = null;
-        yield return new WaitForSeconds(1.5f);
-        cam.Lens.FieldOfView = 70;
+        StageManager.Instance.failCount++;
+        StageManager.Instance.checkTime  = false;
+        KnockBack();
+        Time.timeScale = 0.3f;
+        
+
+        cam.Lens.FieldOfView = 40;
+        composer.Composition.ScreenPosition = Vector2.zero;
+
+        rigid.linearVelocity *= 0.2f;
+
+        yield return new WaitForSeconds(0.6f);
+        
         GameManager.Instance.ReStart();
+
+
+        
 
     }
 
-
-
+ 
 
     public void ShootPlayer(float speed)
     {
@@ -363,7 +379,6 @@ public class Player : MonoBehaviour
 
         rigid.AddForce(transform.up * speed, ForceMode.Impulse);
         this.gameObject.GetComponent<CapsuleCollider>().isTrigger = false;
-        Debug.Log(this.transform.rotation.z);
         rotY = transform.eulerAngles.y;
         rotZ = transform.eulerAngles.z;
 

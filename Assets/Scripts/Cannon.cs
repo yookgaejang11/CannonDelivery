@@ -18,7 +18,7 @@ public class Cannon : MonoBehaviour
 
     public Player player;
 
-    private float currentAngle = 0f; // 각도 캐싱 ⭐
+    private float currentAngle = 0f; // 각도 캐싱
 
     private void Awake()
     {

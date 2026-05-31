@@ -45,7 +45,7 @@ public class UiManager : MonoBehaviour
 
     void Start()
     {
-        progressUi[1].maxValue = GameManager.Instance.isDelivery.Count;
+        progressUi[1].maxValue = DeliveryManager.Instance.isDelivery.Count;
         ClearBg.DOFade(0f, 0); //배경 페이드 0
         clearObj.SetActive(false);
         
@@ -61,7 +61,7 @@ public class UiManager : MonoBehaviour
         controlUI.SetActive(false) ;
     }
 
-    if (GameManager.Instance.IsDeliveryClear())
+    if (DeliveryManager.Instance.IsDeliveryClear())
     {
         deliveryTxt.color = new Color32(8,255,0,255);
     }
@@ -69,10 +69,10 @@ public class UiManager : MonoBehaviour
     {
         deliveryTxt.color = Color.white;
     }
-    deathCountTxt.text = "X" + GameManager.Instance.failCount;
-    deliveryTxt.text = "택배 배송하기 (" + GameManager.Instance.DeliveryNum() + "/" + GameManager.Instance.isDelivery.Count + ")";
+    deathCountTxt.text = "X" + StageManager.Instance.failCount;
+    deliveryTxt.text = "택배 배송하기 (" + DeliveryManager.Instance.DeliveryNum() + "/" + DeliveryManager.Instance.isDelivery.Count + ")";
 
-    timeText.text = FormatTime(GameManager.Instance.playTime);
+    timeText.text = FormatTime(StageManager.Instance.playTime);
 
 
     if(Input.GetKeyDown(KeyCode.Tab))

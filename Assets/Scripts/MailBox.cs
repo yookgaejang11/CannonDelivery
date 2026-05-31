@@ -1,9 +1,5 @@
 using DG.Tweening;
-using System.Drawing;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-
 public class MailBox : MonoBehaviour
 {
     public int num;
@@ -24,15 +20,15 @@ public class MailBox : MonoBehaviour
 
         foreach (Collider collider in colliders)
         {
-            if (collider.CompareTag("Box") && !GameManager.Instance.isDelivery[num])
+            if (collider.CompareTag("Box") && !DeliveryManager.Instance.isDelivery[num])
             {
                 Debug.Log("µé¾î¿È");
-                GameManager.Instance.isDelivery[num] = true;
+                DeliveryManager.Instance.isDelivery[num] = true;
                 collider.gameObject.GetComponent<Rigidbody>().useGravity = false;
                 collider.gameObject.GetComponent<Rigidbody>().isKinematic = true;
                 collider.transform.position = boxPos.position;
                 collider.transform.parent = boxPos;
-                UiManager.Instance.progressUi[1].DOValue(GameManager.Instance.DeliveryNum(), 0.25f);
+                UiManager.Instance.progressUi[1].DOValue(DeliveryManager.Instance.DeliveryNum(), 0.25f);
             }
 
         }

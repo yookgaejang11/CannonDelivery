@@ -1,6 +1,5 @@
 using UnityEngine;
 using DG.Tweening;
-using Unity.VisualScripting;
 
 public class ClearPoint : MonoBehaviour
 {
@@ -9,7 +8,7 @@ public class ClearPoint : MonoBehaviour
 
     public void ClearStage()
     {
-        if (GameManager.Instance.IsDeliveryClear() &&
+        if (DeliveryManager.Instance.IsDeliveryClear() &&
             GameManager.Instance.status != GameStatus.goal)
         {
             GameManager.Instance.status = GameStatus.goal;
@@ -22,7 +21,7 @@ public class ClearPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player") && GameManager.Instance.IsDeliveryClear())
+        if(other.gameObject.CompareTag("Player") && DeliveryManager.Instance.IsDeliveryClear())
         {
             other.GetComponent<Player>().isCheckingLanding = true;
         }
@@ -34,8 +33,10 @@ public class ClearPoint : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             time  += Time.deltaTime;
-            if (time > 0.5f && GameManager.Instance.IsDeliveryClear())
+            if (time > 0.5f && DeliveryManager.Instance.IsDeliveryClear())
             {
+                other.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+                other.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                 ClearStage();
             }
         }
@@ -46,6 +47,7 @@ public class ClearPoint : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             other.GetComponent<Player>().isCheckingLanding = false;
+            time = 0;
         }
     }
 

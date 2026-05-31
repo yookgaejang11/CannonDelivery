@@ -59,6 +59,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
@@ -117,10 +120,10 @@ GameObject:
   - component: {fileID: 1776943276192865235}
   - component: {fileID: 744293590118783526}
   - component: {fileID: 8652872442399326582}
-  - component: {fileID: 2242247536687651310}
+  - component: {fileID: 2890133629743309390}
   m_Layer: 0
   m_Name: SM_Buildings_House_15_V1
-  m_TagString: Untagged
+  m_TagString: FailObj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,6 +170,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
@@ -193,14 +199,14 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2242247536687651310
-MeshCollider:
+--- !u!65 &2890133629743309390
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6195982198640326719}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 7793bdd0c6c4bf845b569a8c36ac3b7e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -211,10 +217,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -7296240812702910927, guid: ee2703d85d903d94b9ac757d5eb1f837, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 5.412448, y: 6.4909096, z: 5.8000016}
+  m_Center: {x: -0.017008305, y: 3.2454896, z: 0.18805051}
 --- !u!1 &7163654838670636597
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,6 +279,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
