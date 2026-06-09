@@ -4,6 +4,7 @@ using UnityEngine;
 public class DeliveryManager : MonoBehaviour
 {
     private static DeliveryManager instance;
+    [Header("배송 성공 확인")]
     public List<bool> isDelivery = new List<bool>();
 
 

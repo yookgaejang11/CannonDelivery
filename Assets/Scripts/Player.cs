@@ -146,7 +146,6 @@ public class Player : MonoBehaviour
 
     void StartAiming()
     {
-        //cam.Lens.FieldOfView = 50;
         Time.timeScale = slowValue;
         aimLine.enabled = true;
         aimingTime = 0f;

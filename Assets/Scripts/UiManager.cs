@@ -7,28 +7,28 @@ using DG.Tweening;
 public class UiManager : MonoBehaviour
 {
     private static UiManager instance;
-
+    [Header("인게임 표시 UI")]
     public TextMeshProUGUI deliveryTxt;
     public TextMeshProUGUI arrivedTxt;
     public TextMeshProUGUI deathCountTxt;
-
     public GameObject controlUI;
-
-    public GameObject clearObj;
-
-    public RectTransform TaskUI;   // 아래로 내려갈 UI
-    public CanvasGroup ClearBg;     // Fade될 UI
-    public RectTransform ResultUI;   // 올라올 UI
-
-    public float downY = -200f;     // task가 내려갈 위치
-    public float targetCY = 100f;   // ClearUI가 올라올 목표 위치
-
-    public bool taskActive = true;
-
     public TextMeshProUGUI timeText;
     public List<Slider> progressUi = new List<Slider>();
 
+    [Header("Clear UI 오브젝트")]
+    public GameObject clearObj;
 
+    [Header("클리어 연출")]
+    public RectTransform TaskUI;   // 아래로 내려갈 UI
+    public CanvasGroup ClearBg;     // Fade될 UI
+    public RectTransform ResultUI;   // 올라올 UI
+    public float downY = -200f;     // task가 내려갈 위치
+    public float targetCY = 100f;   // ClearUI가 올라올 목표 위치
+
+    [Header("목표 UI 표시/숨김")]
+    public bool taskActive = true;
+
+    [Header("Pause 창")]
     public GameObject pauseUi;
     public bool isPause=false;
     private void Awake()

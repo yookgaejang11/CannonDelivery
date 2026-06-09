@@ -4,9 +4,13 @@ public class StageManager : MonoBehaviour
 {
     private static StageManager instance;
 
+    [Header("플레이타임")]
     public float playTime = 0f;
+
+    [Header("실패 횟수")]
     public int failCount = 0;
-    public int playerStar;
+
+    [Header("플레이어 별 시간 조건")]
     public float star3Time;
     public float star2Time;
 
@@ -17,12 +21,6 @@ public class StageManager : MonoBehaviour
     {
         if (instance == null) instance = this;
         else Destroy(this.gameObject);
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
     }
 
     private void Update()

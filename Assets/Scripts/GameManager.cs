@@ -76,10 +76,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-
-        Debug.Log(targets.Count);
-       
-
     }
 
    

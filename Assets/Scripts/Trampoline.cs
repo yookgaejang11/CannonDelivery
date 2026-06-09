@@ -9,6 +9,7 @@ public class Trampoline : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * jumpPower, ForceMode.Impulse);
+            SoundManager.Instance.PlaySFX(SFXType.trampoline);
         }
     }
 }

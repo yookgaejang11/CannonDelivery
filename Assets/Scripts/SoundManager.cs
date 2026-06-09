@@ -149,4 +149,5 @@ public enum SFXType
     phoneDrop,
     anglePlus,
     angleMinus,
+    trampoline
 }
