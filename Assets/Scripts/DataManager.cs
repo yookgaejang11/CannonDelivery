@@ -67,23 +67,8 @@ public class DataManager : MonoBehaviour
     // 스테이지 데이터
     // =====================
 
-    /// <summary>
-    /// 스테이지 기록 반환(값 할당용)
-    /// </summary>
-    /// <param name="index"></param>
-    /// <returns></returns>
-    public StageRecord GetStageRecord(int index)
-    {
-        return gameData.stages.Find(s => s.stageIndex == index);
-    }
-
-
-    /// <summary>
-    /// 스테이지 기록 가져오기(저장용)
-    /// </summary>
-    /// <param name="stageIndex"></param>
-    /// <returns></returns>
-    public StageRecord GetCreateStageRecord(int stageIndex)
+    // 스테이지 기록 가져오기
+    public StageRecord GetStageRecord(int stageIndex)
     {
         StageRecord record = gameData.stages.Find(s => s.stageIndex == stageIndex);
 
@@ -100,7 +85,7 @@ public class DataManager : MonoBehaviour
     // 현재 플탐/죽은횟수 저장 (실패할 때마다)
     public void SaveCurrentRecord(int stageIndex, float currentTime, int currentDeathCount)
     {
-        StageRecord record = GetCreateStageRecord(stageIndex);
+        StageRecord record = GetStageRecord(stageIndex);
         record.currentTime = currentTime;
         record.currentDeathCount = currentDeathCount;
         SaveData();
@@ -109,7 +94,7 @@ public class DataManager : MonoBehaviour
     // 클리어 시 저장
     public void SaveClearRecord(int stageIndex, int stars, float time, int deathCount)
     {
-        StageRecord record = GetCreateStageRecord(stageIndex);
+        StageRecord record = GetStageRecord(stageIndex);
 
         record.isCleared = true;
         record.currentTime = time;
