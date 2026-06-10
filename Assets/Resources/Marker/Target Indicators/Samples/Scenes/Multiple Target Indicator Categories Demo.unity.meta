@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c02d91ba68cb3104d8ab929595fbf28e
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324272
+  packageName: Target Indicators
+  packageVersion: 1.0.0
+  assetPath: Assets/Target Indicators/Samples/Scenes/Multiple Target Indicator Categories
+    Demo.unity
+  uploadId: 780041

@@ -1,0 +1,14 @@
+--- Third-Party Notices for Target Indicators ---
+
+This Unity Asset Package, "Target Indicators", includes third-party content that is subject to its own licenses. Please review the following notices for details:
+
+1.  **Font: "Inter"**
+    * **Source:** Google Fonts (https://fonts.google.com/specimen/Inter)
+    * **License:** SIL Open Font License 1.1
+    * **Details:** See `TargetIndicators/License/OFL.txt` for the full license text and copyright attribution.
+
+--------------------------------------------------------------------------------
+
+All other content in this package, including all images and remaining code/assets,
+is created by Jake Manfre and is subject to the Unity Asset Store
+End User License Agreement (EULA).
